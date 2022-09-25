@@ -10,4 +10,4 @@ COPY client_secret.json .
 COPY gcp_textarea_service_account.json .
 COPY main.py .
 #CMD ["tail", "-f", "/dev/null"]
-CMD ["sh", "-c", "python -u main.py"]
+CMD ["sh", "-c", "gunicorn --bind :$PORT main:application"]
