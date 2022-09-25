@@ -19,7 +19,7 @@ credentials = service_account.Credentials.from_service_account_file(config['sa_k
 db = firestore.Client(project=config['project_id'], credentials=credentials)
 
 flow = Flow.from_client_secrets_file(client_secrets_file='client_secret.json', scopes=["openid"],
-redirect_uri="http://127.0.0.1:5001/g_callback")
+redirect_uri=config["callback_url"])
 app = Flask(__name__, static_folder=config['public'], static_url_path='/public')
 app.secret_key = config['session_secret']
 
