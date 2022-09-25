@@ -2,26 +2,9 @@
 {% block content %}
 <div id="textarea"></div>
 <script>
-  var quill = new Quill('#textarea', {
-    theme: 'snow'
-  });
-  quill.setContents({{contents|safe}});
-    quill.on('text-change', function(delta, oldDelta, source) {
-        var contents = quill.getContents();
-        fetch("/update", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(contents)
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    });
+    var quill = new Quill('#textarea', { theme: 'snow' });
+    quill.setContents({{contents|safe}});
+    quill.on('text-change', setDirty);
+    setInterval(saveCallback, 500);
 </script>
 {% endblock %}

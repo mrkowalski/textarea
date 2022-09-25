@@ -1,0 +1,14 @@
+[main]
+
+host = 0.0.0.0
+port = 5000
+port_local = 5001
+
+public = public
+
+client_id = <change_me>
+client_secret = <change_me>
+session_secret = <change_me>
+
+project_id = <change_me>
+sa_key = gcp_textarea_service_account.json

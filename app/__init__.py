@@ -33,7 +33,6 @@ def needs_login(func):
             print("Not logged in")
             return redirect(url_for('login'))
         else:
-            print("Logged in")
             return func(*args, **kwargs)
     return wrapper
 
