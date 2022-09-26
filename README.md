@@ -11,4 +11,6 @@
 * `pyenv virtualenv 3.10.6 textarea`
 * `pyenv activate textearea`
 * `pip install -r requirements.txt`
+* Google Cloud setup
+  * Create gcp_textarea_service_account.json
 * `gunicorn --bind :<TCP_PORT> main:application`
