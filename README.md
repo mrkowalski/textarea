@@ -1,6 +1,8 @@
 # textarea
 
-# How to start, locally
+## What is this?
+
+## How to start, locally
 
 * `git clone git@github.com:mrkowalski/textarea.git`
 * `cd textarea`
