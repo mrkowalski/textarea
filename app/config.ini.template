@@ -3,7 +3,8 @@
 host = 0.0.0.0
 port = 5000
 port_local = 5001
-callback_url = https://t.mkcg.pl/g_callback
+#callback_url = <url of your GCP Cloud Run instance>
+#callback_url = https://t.mkcg.pl/g_callback
 
 public = public
 
