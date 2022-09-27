@@ -131,3 +131,4 @@ dmypy.json
 client_secret.json
 gcp_textarea_service_account.json
 app/config.ini
+*~
