@@ -42,8 +42,6 @@ oauth_client_config = {
         }
     }
 
-#credentials = service_account.Credentials.from_service_account_file(config['sa_key'])
-#db = firestore.Client(project=config['project_id'], credentials=credentials)
 db = firestore.Client(project=config['project_id'])
 
 flow = Flow.from_client_config(oauth_client_config, scopes=["openid"],
