@@ -10,6 +10,7 @@ from google.oauth2 import id_token, service_account
 from google.cloud import firestore
 from functools import wraps
 from google.cloud import secretmanager
+from .parser import Parser, Command
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
@@ -51,6 +52,8 @@ flow = Flow.from_client_config(oauth_client_config, scopes=["openid"],
 redirect_uri=config["callback_url"])
 app = Flask(__name__, static_folder=config['public'], static_url_path='/public')
 app.secret_key = SESSION_SECRET
+
+parser = Parser()
 
 def modtime(path: str) -> str:
     return str(os.path.getmtime(path)).split('.')[0]
@@ -123,3 +126,46 @@ def update():
         "data": request.json
     })
     return jsonify("")
+
+@app.route("/search")
+@needs_login
+def search():
+    q: str = request.args.get("term")
+    return jsonify(
+         [
+            {
+                "id": 1,
+                "label": "One",
+                "value": "One"
+            }, {
+              "id": 2,
+              "label": "Two",
+              "value": "Two"
+            } , {
+                "id": 3,
+                "label": q,
+                "value": q
+            }
+        ]
+    )
+
+@app.route("/submit", methods=['POST'])
+@needs_login
+def submit():
+    q: str = request.json
+    term: str = q['term'].strip()
+    if parser.is_url(term):
+        if parser.has_url_prefix(term):
+            return jsonify({"url": term})
+        else:
+            return jsonify({"url": f"http://{term}"})
+    else:
+        c = parser.get_command(term)
+        if c is not None and c[0] == Command.TRANSLATE:
+            return jsonify({"url": f"https://diki.pl/{c[1]}"} )
+        elif c is not None and c[0] == Command.BOOKMARK:
+            return jsonify({"url": c[1]})
+        else:
+            return jsonify({"url": "https://google.com/search?q=" + term} )
+
+
